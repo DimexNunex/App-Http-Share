@@ -1,4 +1,4 @@
-# App-Http-Share
+# Http Share
 
 # PORTUGUES
 Aplicativo para enviar arquivos usando tecnologias da web.
