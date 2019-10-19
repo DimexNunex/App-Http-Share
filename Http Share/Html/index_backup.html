@@ -1,0 +1,387 @@
+<html>
+<head>
+<title>HTTP FILE SHARE</title>
+<meta name="viewport" content="width=device-width initial-scale=1">
+	<link rel="icon" href="img/favicon.png">
+<meta charset="utf-8">
+	<link rel="stylesheet" href="font-awesome.min.css">
+	
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+</head>
+<style>
+	body{
+		 display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	    align-items: center; 
+	    background-color: #eee;
+	    margin: 0px;
+	    border: 8px solid #458ccb;
+	}
+	#geral{
+		display: flex; 
+		flex-direction: column;
+		/*justify-content: center; */
+		align-items: center; 
+		background-color: #eee;  
+		/*border: 4px solid #0000ff6e; */
+		/*padding: 0px 5px 0px 5px;*/
+		
+	}
+	h1{
+		font-family: sans-serif; 
+		color: white; 
+		padding: 20px 0px 20px 0px;
+		margin: 0px; 
+		background-color: rgba(1,0,255,0.56); 
+		margin-bottom: 10px;  
+		text-align: center; 
+		width: 100%;
+	}
+	
+	img{
+		width: 200px;
+	}
+	
+	p{
+		font-family: sans-serif;
+		font-weight: bolder;
+		display: table-caption;
+	}
+	form{
+		  display: none;
+    	flex-direction: column;
+    	align-items: center;
+	}
+	.file{
+		padding: 20px;
+	    border: 2px;
+	    background: #aaa;
+	    border-radius: 5px;
+	    /* height: 200px; */
+	    /* width: 300px; */
+	    /* opacity: 1; */
+	    display: flex;
+	    font-family: sans-serif;
+	    justify-content: center;
+	    align-items: center;
+	}
+	h4{
+		margin: 4px;
+		font-family: sans-serif;
+		color: #333;
+	}
+	ul{
+		display: flex;
+		background-image: linear-gradient(#303030,#303030);
+		color: #ddd;
+		text-align: center;
+		list-style: none;
+        margin: 0px;
+        padding: 0px;
+        margin-bottom: 20px;
+	}
+	
+	li{
+		cursor: default;
+		font-family: sans-serif;
+   		width: 25%;
+   		text-align: center;
+    	padding: 15px;
+	}
+	h3{
+		font-family: sans-serif; 
+		color: #404040; 
+		width: 100%; 
+		text-align: center;
+	}
+	.select{
+		background: #3f85c2;
+	}
+	#enviar{
+		   width: 150px;
+		   height: 150px;
+	    display: block;
+	    color: #333;
+	    margin: auto;
+	    padding: 5px;
+	    font-size: 20px;
+	    font-weight: bolder;
+	    font-family: sans-serif;
+	    border-radius: 100px;
+	    border: none;
+	    cursor: pointer;
+	    margin-bottom: 5px;
+	    background: #fff;
+	    border: 7px solid #6868f7;
+	    margin-bottom: 20px;
+	}
+	#file_recever{
+		position: absolute;
+		display: none;
+		margin: auto;
+		top: 0px;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		flex-direction: column;
+		background: rgb(230,230,240);
+		width: 200px;
+		height: 100px;
+		border: 2px solid #444;
+		text-align: center;
+		justify-content: space-between;
+		box-shadow: 0px 0px 20px;
+		padding:3px;
+	}
+	button{
+		width: 100%;
+	}
+	#popup{
+		position: fixed;
+		display: none;
+		height: 60px;
+		width: 300px;
+		text-align: center;
+		background: #9e9890;
+		top: 9px;
+		right: 9px;
+		border-radius: 10px;
+		align-items: center;
+		padding: 5px;
+	}
+	#popup_flex{
+		display: flex;
+		width: 100%;
+		height: 100%;
+		justify-content: center;
+		align-items: center;
+	}
+	#popup_in{
+		font-size: 1em;
+		display: flex;
+		color: #303030;
+		font-family: sans-serif;
+	}
+	
+	#progress{
+		width: 80px;
+		height: 56px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 100px;
+		background: #aaa;
+	}
+	#per{
+		
+	}
+	#upCancel{
+		position: absolute;
+		top: 75%;
+		width: 30px;
+		height: 30px;
+		border: 0px;
+		border-radius: 100px;
+		background: #7d5c5c;
+		font-weight: bold;
+		color: #000;
+	}
+</style>
+
+<body>
+	
+	<div id="geral">
+	 <!--<h1 >HTTP FILE SHARE</h1>-->
+	 <img src="img/Logo.png" width="72" style="margin: 5px;"> 
+	 
+	
+		
+		 <h3>Enviar Arquivos</h3> 
+		 <h4>Selecione o tipo de arquivo á enviar </h4>
+		 <ul>
+		 	<li class="select">Imagens</li>
+		 	<li >Videos</li>
+		 	<li>Musicas</li>
+		 	<li>Outros</li>
+		 </ul>
+		 <form action="/upload" method="post" enctype="multipart/form-data" id="form">
+		<p><input type="file" name="Imagens" class="file" id="file_in" /> </p>
+		<input type="hidden" value="300" name="size">
+	<input type="submit" name="send">
+</form>	
+	
+		<input type="submit" value="ENVIAR" id="enviar" class="fa fa-send"/> 
+		
+	
+  
+
+ <div id="file_recever">
+ 	   <p>Receber arquivo?</p>
+ 	   <a href="#" id="download" download target="_blanc"><button>aceitar</button></a>
+ 	   <button id="cancel">cancelar</button>
+ </div>
+ </div>
+ <div id="popup" >
+ 	 <div id="popup_flex" >
+ 	 	<div id="progress"><p id="per">0%</p></div>
+ 	 	<p id="popup_in">Enviando arquivo para a pasta "HTTP SHARE"</p>
+ 	 	</div>
+ 	 	<button id="upCancel">x</button>
+ </div>
+</body>
+
+
+
+<script type="text/javascript">
+	var menu = document.getElementsByTagName('li');
+	var input = document.getElementById("file_in");
+	var aux = [];
+	for(var i = 0; i < menu.length; i++){
+		aux.push(menu[i].innerText);
+		menu[i].onclick = function(){
+            var sel = aux.indexOf(this.innerText);
+            input.name = this.innerText;
+            for(x in menu){
+            	if(sel == x) menu[x].className = "select";
+            	else menu[x].className = "";
+            }
+		}
+	
+	 
+	}
+</script>
+
+</script>
+
+<!-- form area outo select-->		
+<script type="text/javascript">
+	var form = document.getElementById("form");
+		
+	var file_in = $("#file_in")[0];
+	
+	$("#enviar").click(function(){
+		file_in.click();
+	})
+	
+	form.oninput = function(){
+		 upload();
+	}
+
+</script>
+
+
+<script type="text/javascript">
+	var form = document.getElementById("form");
+	
+	function upload(){
+		xhr = new XMLHttpRequest() || new ActiveXObject("Microsoft.XMLHTTP");
+		xhr.upload.addEventListener("progress", UpProgress,false);
+xhr.upload.addEventListener("error",xhr_erro,false);
+xhr.upload.addEventListener("load",xhr_load,false);
+
+		var fd = new FormData();
+	fd.append(file_in.name,file_in.files[0]);
+	xhr.open("POST",form.action);
+	xhr.send(fd);
+	}
+	
+	function UpProgress(pgr){
+		if(pgr.lengthComputable){
+			var percent = Math.round(pgr.loaded*100/pgr.total);
+			if(percent < "100"){ $("#popup").show("1000");
+			
+			}
+			else {
+				  $("#popup").hide("5000")
+				
+				}
+			$("#per").text(percent+"%");
+		}
+	}
+
+function xhr_erro(e){
+	alert("Erro deconecido tente refrescar o navegador")
+}
+ function xhr_load(a){
+	ws.send("envido");
+	if(file_in.value != ""){	alert("Arquivo enviado para a pasta HTTP SHARE")
+	}
+}
+
+//cancelar o upload
+$("#upCancel").click(function(){
+	document.location.reload();
+})
+</script>
+
+
+
+<script>
+	//Receber o url
+	var down_janela = document.getElementById("file_recever");
+	var cancel = document.getElementById("cancel");
+	var down = document.getElementById("download");
+	
+	var Url;
+	function conect(){
+	if(!window.WebSocket){
+		alert("Seu navegador não é suportado");
+		return;
+	}
+	
+	ws = new WebSocket("ws://"+window.location.host);
+	ws.onopen = function(){};
+	ws.onmessage = recive_file;
+	ws.onclose = function(){};
+	ws.onerror = function(){alert("Erro no aplicativo!")}
+	
+}
+	
+	function recive_file(url){
+		 down_janela.style.display = "flex";
+		 down.href = url.data;
+   	}
+
+  
+  cancel.onclick = function(){
+	    down_janela.style.display = "none";
+	    
+ }
+  down.onclick = function(){
+  	   down_janela.style.display = "none";  	   
+  	  
+  }
+  
+  conect();
+</script>
+
+
+
+<script>
+	/*
+	var button = document.getElementById("button");
+	var  text = document.getElementById("text");
+
+	 var httpRequest = new XMLHttpRequest();
+	 button.onclick = function ( msg )
+	{
+		httpRequest.onreadystatechange = function() { HandleReply(httpRequest); };  
+		httpRequest.open("GET", "/message?msg=" + text.value, true);
+		httpRequest.send(null);
+	}
+    
+   	setInterval( function(){
+		httpRequest.onreadystatechange = function() { HandleReply(httpRequest); }; 
+   	},1000)
+
+	function HandleReply( httpRequest )
+	{
+		if( httpRequest.readyState==4 ) 
+		{
+			if( httpRequest.status==200 ) alert(httpRequest.responseText);
+			else  alert("Error: " + httpRequest.status + " " +  httpRequest.responseText);
+		}
+	}*/
+</script>
+</html>
